@@ -64,7 +64,9 @@ public class CharacterRepository implements ICharacterRepository {
         } catch (IOException e) {
             System.out.println("Error when loading characters list. " + e.getMessage());
         } catch (Exception e) {
-            System.out.println("Error when loading "+filePath+". "+e.getMessage());
+            System.out.println("Error when loading " + filePath+". " + e.getMessage());
+            System.out.println("Exception type: " + e.getClass().getName());
+            e.printStackTrace();
         }
     }
 }
