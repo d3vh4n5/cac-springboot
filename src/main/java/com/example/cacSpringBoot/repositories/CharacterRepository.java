@@ -10,6 +10,7 @@ import org.springframework.util.ResourceUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
@@ -49,18 +50,29 @@ public class CharacterRepository implements ICharacterRepository {
         String filePath = "starwars.json";
 
         try {
-            URL res = getClass().getClassLoader().getResource(filePath);
-            if (res == null) {
-                throw new FileNotFoundException(filePath+" not found in resources folder");
-            }
+//            URL res = getClass().getClassLoader().getResource(filePath);
+//            if (res == null) {
+//                throw new FileNotFoundException(filePath+" not found in resources folder");
+//            }
             // assert res != null;
-            File file = Paths.get(res.toURI()).toFile();
+            // File file = Paths.get(res.toURI()).toFile();
+            // listOfChars = mapper.readValue(file, new TypeReference<List<SWCharacter>>() {});
 
-            listOfChars = mapper.readValue(file, new TypeReference<List<SWCharacter>>() {});
+
+            // Obtener el recurso como InputStream
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filePath);
+
+            // Verificar si el recurso existe
+            if (inputStream == null) {
+                throw new FileNotFoundException(filePath + " not found in resources folder");
+            }
+
+
+            listOfChars = mapper.readValue(inputStream, new TypeReference<List<SWCharacter>>() {});
         } catch (FileNotFoundException e){
             System.out.println("File not found. " + e.getMessage());
-        } catch (URISyntaxException e) {
-            System.out.println("URI Syntax error. "+ e.getMessage());
+//        } catch (URISyntaxException e) {
+//            System.out.println("URI Syntax error. "+ e.getMessage());
         } catch (IOException e) {
             System.out.println("Error when loading characters list. " + e.getMessage());
         } catch (Exception e) {
