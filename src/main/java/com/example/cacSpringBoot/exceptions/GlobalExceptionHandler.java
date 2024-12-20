@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -19,5 +20,16 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorDto> invalidJsonException(InvalidJsonException e){
         ErrorDto errorDto = new ErrorDto(400, e.getMessage());
         return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<ErrorDto> resourceNotFoundException(NoResourceFoundException e){
+        // return new ResponseEntity<>(new ErrorDto(404, e.getMessage()), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(
+                new ErrorDto(
+                        404,
+                        "Route: /" + e.getResourcePath() +" does not exist in application"
+                ),
+                HttpStatus.NOT_FOUND);
     }
 }

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
 
 import java.io.File;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,13 +33,26 @@ public class CharacterRepository implements ICharacterRepository {
     }
 
     private void loadChars(){
+//        ObjectMapper mapper = new ObjectMapper();
+//        File jsonFile = null;
+//        try {
+//            jsonFile = ResourceUtils.getFile("classpath:starwars.json");
+//            listOfChars = mapper.readValue(jsonFile, new TypeReference<List<SWCharacter>>() {});
+//        } catch (Exception ex) {
+//            System.out.println("No existe el archivo json" + ex.getMessage());
+//        }
+
         ObjectMapper mapper = new ObjectMapper();
-        File jsonFile = null;
+
         try {
-            jsonFile = ResourceUtils.getFile("classpath:starwars.json");
-            listOfChars = mapper.readValue(jsonFile, new TypeReference<List<SWCharacter>>() {});
-        } catch (Exception ex) {
-            System.out.println("No existe el archivo json" + ex.getMessage());
+            URL res = getClass().getClassLoader().getResource("starwars.json");
+
+            assert res != null;
+            File file = Paths.get(res.toURI()).toFile();
+
+            listOfChars = mapper.readValue(file, new TypeReference<>() {});
+        } catch (Exception e){
+            System.out.println("File not found. " + e.getMessage());
         }
     }
 }
