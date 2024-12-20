@@ -9,6 +9,8 @@ import org.springframework.util.ResourceUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -44,18 +46,25 @@ public class CharacterRepository implements ICharacterRepository {
 //        }
 
         ObjectMapper mapper = new ObjectMapper();
+        String filePath = "starwars.json";
 
         try {
-            URL res = getClass().getClassLoader().getResource("starwars.json");
+            URL res = getClass().getClassLoader().getResource(filePath);
             if (res == null) {
-                throw new FileNotFoundException("starwars.json not found in resources folder");
+                throw new FileNotFoundException(filePath+" not found in resources folder");
             }
             // assert res != null;
             File file = Paths.get(res.toURI()).toFile();
 
             listOfChars = mapper.readValue(file, new TypeReference<List<SWCharacter>>() {});
-        } catch (Exception e){
+        } catch (FileNotFoundException e){
             System.out.println("File not found. " + e.getMessage());
+        } catch (URISyntaxException e) {
+            System.out.println("URI Syntax error. "+ e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Error when loading characters list. " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error when loading "+filePath+". "+e.getMessage());
         }
     }
 }
