@@ -36,6 +36,39 @@ public class CharacterRepository implements ICharacterRepository {
         return listOfChars.stream().filter(e -> e.getName().toLowerCase().contains(name.toLowerCase()) ).toList();
     }
 
+    @Override
+    public List<SWCharacter> searchWithParams(String name, String gender, String homeworld, String species) {
+        List<SWCharacter> coincidences = null;
+
+        if (name != null) coincidences = listOfChars.stream().filter( swc ->
+                swc.getName().toLowerCase().contains(name.toLowerCase())
+        ).toList();
+        else coincidences = listOfChars;
+
+        if (gender != null) coincidences = coincidences.stream().filter(swc ->{
+                    if (swc.getGender() != null)
+                        return swc.getGender().equalsIgnoreCase(gender);
+                    return false;
+                }
+        ).toList();
+
+        if (homeworld != null) coincidences = coincidences.stream().filter(swc -> {
+                    if (swc.getHomeworld() != null)
+                        return swc.getHomeworld().toLowerCase().contains(homeworld.toLowerCase());
+                    return false;
+                }
+        ).toList();
+
+        if (species != null) coincidences = coincidences.stream().filter(swc ->{
+                    if (swc.getSpecies() != null)
+                        return swc.getSpecies().toLowerCase().contains(species.toLowerCase());
+                    return false;
+                }
+        ).toList();
+
+        return coincidences;
+    }
+
     private void loadChars(){
 //        ObjectMapper mapper = new ObjectMapper();
 //        File jsonFile = null;

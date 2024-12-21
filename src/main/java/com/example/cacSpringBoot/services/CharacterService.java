@@ -8,6 +8,7 @@ import com.example.cacSpringBoot.repositories.interfaces.ICharacterRepository;
 import com.example.cacSpringBoot.services.interfaces.ICharacterService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -49,5 +50,20 @@ public class CharacterService implements ICharacterService {
                         ch.getSpecies()
                 )
         ).toList();
+    }
+
+    @Override
+    public List<CharacterDto> searchWithFilters(String name, String gender, String homeworld, String species) {
+        return characterRepository.searchWithParams(name, gender, homeworld, species).stream().map( ch ->
+                        new CharacterDto(
+                                ch.getId(),
+                                ch.getName(),
+                                ch.getHeight(),
+                                ch.getMass(),
+                                ch.getGender(),
+                                ch.getHomeworld(),
+                                ch.getSpecies()
+                        )
+                ).toList();
     }
 }

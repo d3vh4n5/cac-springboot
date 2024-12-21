@@ -25,9 +25,15 @@ public class CharacterController {
 
     @GetMapping("/characters/search")
     public ResponseEntity<?> searchCharacter(
-            @Nullable @RequestParam String name
+            @Nullable @RequestParam String name,
+            @Nullable @RequestParam String gender,
+            @Nullable @RequestParam String homeworld,
+            @Nullable @RequestParam String species
     ){
-        return null;
+        return new ResponseEntity<>(
+                characterService.searchWithFilters(name, gender, homeworld, species),
+                HttpStatus.OK
+        );
     }
 
     @GetMapping("/characters/{name}")

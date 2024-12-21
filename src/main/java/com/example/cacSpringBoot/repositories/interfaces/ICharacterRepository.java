@@ -7,4 +7,5 @@ import java.util.List;
 public interface ICharacterRepository {
     List<SWCharacter> findAll();
     List<SWCharacter> findCharactersByName(String name);
+    List<SWCharacter> searchWithParams(String name, String gender, String homeworld, String species);
 }

@@ -9,4 +9,5 @@ import java.util.List;
 public interface ICharacterService {
     List<CharacterDto> findAllCharacters();
     List<CharacterDto> findCharactersByName (ReqNameDto reqNameDto);
+    List<CharacterDto> searchWithFilters(String name, String gender, String homeworld, String species);
 }
