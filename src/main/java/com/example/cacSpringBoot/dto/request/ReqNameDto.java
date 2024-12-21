@@ -8,5 +8,23 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReqNameDto {
-    private String Name;
+    private String name;
 }
+
+//public class ReqNameDto {
+//    private String name;
+//
+//    public ReqNameDto() { }
+//
+//    public ReqNameDto(String name) {
+//        this.name = name;
+//    }
+//
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+//}

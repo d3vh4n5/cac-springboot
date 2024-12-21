@@ -1,8 +1,9 @@
 package com.example.cacSpringBoot.controllers;
 
 import com.example.cacSpringBoot.dto.UserDto;
+import com.example.cacSpringBoot.dto.request.ReqNameDto;
 import com.example.cacSpringBoot.dto.response.SuccessfullyResponseDto;
-import com.example.cacSpringBoot.services.IUserService;
+import com.example.cacSpringBoot.services.interfaces.IUserService;
 import com.example.cacSpringBoot.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,12 @@ public class UserController {
         return new ResponseEntity<>(userService.listUsers(), HttpStatus.OK);
     }
 
+    @GetMapping("/{name}")
+    public ResponseEntity<UserDto> getOneUser(@PathVariable String name){
+        ReqNameDto reqNameDto = new ReqNameDto(name);
+        return new ResponseEntity<>(userService.listOneUser(reqNameDto), HttpStatus.OK);
+    }
+
 //    @GetMapping("/create/{name}")
 //    public User createUser(@PathVariable String name){
 //        return new User(name, 33);
@@ -41,5 +48,4 @@ public class UserController {
             @RequestBody UserDto userDto){
         return new ResponseEntity<>(userService.updateUser(name, userDto), HttpStatus.OK);
     }
-
 }

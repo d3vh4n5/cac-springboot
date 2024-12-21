@@ -67,7 +67,6 @@ public class CharacterRepository implements ICharacterRepository {
                 throw new FileNotFoundException(filePath + " not found in resources folder");
             }
 
-
             listOfChars = mapper.readValue(inputStream, new TypeReference<List<SWCharacter>>() {});
         } catch (FileNotFoundException e){
             System.out.println("File not found. " + e.getMessage());

@@ -1,5 +1,6 @@
 package com.example.cacSpringBoot.repositories;
 
+import com.example.cacSpringBoot.dto.request.ReqNameDto;
 import com.example.cacSpringBoot.entities.User;
 import com.example.cacSpringBoot.repositories.interfaces.IUserRepository;
 import org.springframework.stereotype.Repository;
@@ -44,6 +45,14 @@ public class UserRepository implements IUserRepository {
     @Override
     public void updateUser(int targetIndex, User user) {
         users.set(targetIndex, user);
+    }
+
+    @Override
+    public Optional<User> findOne(ReqNameDto reqNameDto) {
+        String name = reqNameDto.getName().toLowerCase();
+        return  users.stream().filter( user ->
+                user.getName().toLowerCase().contains(name)
+        ).findFirst();
     }
 
 

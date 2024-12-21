@@ -1,18 +1,21 @@
 package com.example.cacSpringBoot.services;
 
 import com.example.cacSpringBoot.dto.UserDto;
+import com.example.cacSpringBoot.dto.request.ReqNameDto;
 import com.example.cacSpringBoot.dto.response.SuccessfullyResponseDto;
 import com.example.cacSpringBoot.entities.User;
 import com.example.cacSpringBoot.exceptions.InvalidJsonException;
 import com.example.cacSpringBoot.exceptions.UserNotFoundException;
 import com.example.cacSpringBoot.repositories.interfaces.IUserRepository;
 import com.example.cacSpringBoot.repositories.UserRepository;
+import com.example.cacSpringBoot.services.interfaces.IUserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class UserService implements IUserService{
+public class UserService implements IUserService {
     // Logica de negocio
 
     //Inyección de dependecias
@@ -60,6 +63,20 @@ public class UserService implements IUserService{
             userRepository.updateUser(targetIndex, modifiedUser);
         // crear respuesta
         return new SuccessfullyResponseDto("Usuario actualizado con éxito");
+    }
+
+    @Override
+    public UserDto listOneUser(ReqNameDto reqNameDto) {
+        Optional<User> userOptional = userRepository.findOne(reqNameDto);
+
+        if (userOptional.isEmpty()) throw new UserNotFoundException("User not found in database");
+
+        User user = userOptional.get();
+
+        return new UserDto(
+                user.getName(),
+                user.getEdad()
+        );
     }
 
 
