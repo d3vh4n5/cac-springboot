@@ -3,6 +3,7 @@ package com.example.cacSpringBoot;
 import com.example.cacSpringBoot.controllers.Controller;
 import com.example.cacSpringBoot.dto.UserDto;
 import com.example.cacSpringBoot.dto.response.SuccessfullyResponseDto;
+import com.example.cacSpringBoot.entities.User;
 import com.example.cacSpringBoot.services.interfaces.IUserService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,28 +12,27 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class CacSpringBootApplicationTests {
 
-	@Autowired
+	@Autowired // inyecto dependencia
 	IUserService userService;
 
 //	@AfterAll
 //	@AfterEach
 //	@BeforeAll
 //	@BeforeEach
-	void setup(){
-
-	}
+	void setup(){}
 
 	@Test
-	@DisplayName("Prueba la correcta creación de un user")
+	@DisplayName("Successfully Created User")
 	void createUserTest() {
 		// Arrange
-		String name = "Juan";
-		int age = 44;
-		String expectedResult = "Usuario creado correctamente!";
+		UserDto userDto = new UserDto("Juan", 33);
+		SuccessfullyResponseDto expectedResult = new SuccessfullyResponseDto("Usuario creado correctamente!");
 		// Act
-		SuccessfullyResponseDto result = userService.createUser(new UserDto(name, age));
+		SuccessfullyResponseDto result = userService.createUser(userDto);
 		// Assert
-		Assertions.assertEquals(expectedResult, result.getMessage());
+		Assertions.assertEquals(expectedResult.getMessage(), result.getMessage());
+		Assertions.assertEquals(expectedResult, result); // no falla por el @Data de los DTO, porque les redefine el equals
+
 	}
 
 	/*  Pruebas Unitarias:
