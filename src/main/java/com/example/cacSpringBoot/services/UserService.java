@@ -2,6 +2,7 @@ package com.example.cacSpringBoot.services;
 
 import com.example.cacSpringBoot.dto.UserDto;
 import com.example.cacSpringBoot.dto.request.ReqNameDto;
+import com.example.cacSpringBoot.dto.response.HelloDto;
 import com.example.cacSpringBoot.dto.response.SuccessfullyResponseDto;
 import com.example.cacSpringBoot.entities.User;
 import com.example.cacSpringBoot.exceptions.InvalidJsonException;
@@ -77,6 +78,11 @@ public class UserService implements IUserService {
                 user.getName(),
                 user.getEdad()
         );
+    }
+
+    @Override
+    public HelloDto saludar(String name){
+        return new HelloDto("hola "+name);
     }
 
 
