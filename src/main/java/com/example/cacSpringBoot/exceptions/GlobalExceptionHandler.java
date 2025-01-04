@@ -3,6 +3,7 @@ package com.example.cacSpringBoot.exceptions;
 import com.example.cacSpringBoot.dto.response.ErrorDto;
 import com.example.cacSpringBoot.dto.response.ValidationErrorDto;
 import com.example.cacSpringBoot.enums.Status;
+import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -93,4 +94,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(new ErrorDto(500, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(InvalidDataAccessResourceUsageException.class)
+    public ResponseEntity<ErrorDto> dbErrorResponse(InvalidDataAccessResourceUsageException e){
+        return new ResponseEntity<>(
+                new ErrorDto(500, e.getMessage()),
+                HttpStatus.INTERNAL_SERVER_ERROR
+        );
+    }
 }
