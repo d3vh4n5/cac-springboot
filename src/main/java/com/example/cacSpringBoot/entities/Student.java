@@ -1,12 +1,12 @@
 package com.example.cacSpringBoot.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Entity
-@Getter @Setter // no uso el @Data para que no me de problemas el testing
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter @Setter// no uso el @Data para que no me de problemas el testing
 @Table(name = "student")
 @ToString
 public class Student {

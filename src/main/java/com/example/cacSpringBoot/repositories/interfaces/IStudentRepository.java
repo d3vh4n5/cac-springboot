@@ -1,12 +1,15 @@
 package com.example.cacSpringBoot.repositories.interfaces;
 
+import com.example.cacSpringBoot.dto.StudentDto;
 import com.example.cacSpringBoot.entities.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface IStudentRepository extends JpaRepository<Student, Long> {
-    Student findByName(String name);
+    List<Student> findByName(String name);
     // El metood save crea una entidad si no existe, y si existe la actualiza,
     // la diferencia es que oara que cree no le mandamos id, pero paraque actualice si
 }

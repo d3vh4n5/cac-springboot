@@ -28,4 +28,15 @@ public class StudentService implements IStudentService {
         return lista;
     }
 
+    @Override
+    public StudentDto create(StudentDto studentDto) {
+        studentRepository.save(new Student(
+                null,
+                studentDto.getDni(),
+                studentDto.getName(),
+                studentDto.getLastname()
+        ));
+        return studentDto;
+    }
+
 }
