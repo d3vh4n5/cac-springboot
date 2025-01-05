@@ -19,6 +19,7 @@ public class StudentService implements IStudentService {
 
     public List<StudentDto> findAll (){
         List<Student> students = studentRepository.findAll();
+        System.out.println(studentRepository.findByName("juan"));
         ObjectMapper mapper = new ObjectMapper();
         List<StudentDto> lista = students.stream().map(student -> {
             return new StudentDto(student.getDni(), student.getName(), student.getLastname());

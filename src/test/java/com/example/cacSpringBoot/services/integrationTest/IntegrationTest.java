@@ -28,7 +28,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class IntegrationTest {
     ObjectWriter writer = new ObjectMapper().configure(SerializationFeature.WRAP_ROOT_VALUE, false)
-            .writer().withDefaultPrettyPrinter();
+            .writer();
+            //.writer().withDefaultPrettyPrinter();
 
     @Autowired
     private MockMvc mockMvc;
@@ -83,7 +84,8 @@ public class IntegrationTest {
                 .andDo(print())
                 .andReturn();
 
-        assertEquals("{\"saludo\":\"hola Cat agregado\"}", response.getResponse().getContentAsString());
+//        assertEquals("{\"saludo\":\"hola Cat agregado\"}", response.getResponse().getContentAsString());
+        assertEquals(responseJson, response.getResponse().getContentAsString());
         assertEquals(200, response.getResponse().getStatus());
         assertEquals("application/json", response.getResponse().getContentType());
 
